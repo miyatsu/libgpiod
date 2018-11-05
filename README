@@ -158,3 +158,38 @@ CONTRIBUTING
 Contributions are welcome - please send patches and bug reports to
 linux-gpio@vger.kernel.org (add the [libgpiod] prefix to the e-mail subject
 line) and stick to the linux kernel coding style when submitting new code.
+
+
+miyatsu added
+=============
+
+How to compile
+--------------
+
+Using command below to compile and install libgpiod:
+
+cd libgpiod/
+./autogen.sh --enable-tools=yes \
+	     --host=arm-linux-gnueabi \
+	     --prefix=/home/<home dir>/export/rootfs \
+	     ac_cv_func_malloc_0_nonnull=yes
+make
+make install
+
+The --enable-tools option is to build command program that can used in bash
+environment, the --host option is to specify the target host arch you want
+to run this libgpio, the --prefix option used to specify the install dir
+of this program, generally just put it point to your target rootfs dir.
+
+Note: The ac_cv_func_malloc_0_nonnull option will prevent an undefined
+reference to `rpl_malloc’ error at linking, useful when cross compile
+this project.
+
+After run "make install" (may need root privilege), some file will automaticly
+added to the root dir like include/gpio.h, lib/libgpiod*, bin/gpio* and etc.
+
+You can use this command to generate runable tools for ARMv8 arch:
+./autogen.sh --enable-tools=yes \
+	     --host=aarch64-linux-gnu \
+	     --prefix=/home/<home dir>/export/rootfs \
+	     ac_cv_func_malloc_0_nonnull=yes
